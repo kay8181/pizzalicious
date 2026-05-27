@@ -1,0 +1,27 @@
+package ui;
+
+public enum OrderMenuOptions {
+    ADD_PIZZA(1, "Add Pizza"),
+    ADD_DRINK(2, "Add Drink"),
+    ADD_GARLIC_KNOTS(3, "Add Garlic Knots"),
+    CHECKOUT(4, "Checkout"),
+    CANCEL_ORDER(0, "Cancel Order");
+
+    private final int optionNumber;
+    private final String optionName;
+
+    private OrderMenuOptions(int optionNumber, String optionName) {
+        this.optionNumber = optionNumber;
+        this.optionName = optionName;
+
+    }
+
+    public int getOptionNumber() {
+        return optionNumber;
+    }
+
+    public String getOptionName() {
+        return optionName;
+    }
+
+}
