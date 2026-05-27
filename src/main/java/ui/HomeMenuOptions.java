@@ -1,7 +1,10 @@
 package ui;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public enum HomeMenuOptions {
-    New_Order(1, "New Order"),
+    NEW_ORDER(1, "New Order"),
     EXIT(0, "Exit");
 
     private final int optionNumber;
@@ -19,6 +22,10 @@ public enum HomeMenuOptions {
 
     public String getOptionName() {
         return optionName;
+    }
+
+    public static Optional<HomeMenuOptions> fromOptionNumber(int optionNumber) {
+        return Arrays.stream(values()).filter((option) -> option.optionNumber == optionNumber).findFirst();
     }
 
 }
