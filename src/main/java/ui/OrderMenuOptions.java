@@ -31,12 +31,4 @@ public enum OrderMenuOptions {
         return Arrays.stream(values()).filter((option) -> option.optionNumber == optionNumber).findFirst();
     }
 
-    private void OrderMenu() {
-        for(OrderMenuOptions option : OrderMenuOptions.values()) {
-            System.out.printf("%-3d - %s%n", option.getOptionNumber(), option.getOptionName());
-        }
-
-        System.out.println();
-    }
-
 }

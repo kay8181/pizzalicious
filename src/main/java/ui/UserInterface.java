@@ -11,6 +11,8 @@ public class UserInterface {
     public UserInterface() {
     }
 
+    //displaying menu and accepting user input
+
     public void homeDisplay() {
 
         HomeMenuOptions selectedOption;
@@ -38,9 +40,19 @@ public class UserInterface {
     }
 
     public void pizzaDisplay() {
-
+        System.out.println("Select your crust: ");
+        CrustType selectedOption;
+        this.crustMenu();
+        int choice = scanner.nextInt();
+        selectedOption = (CrustType)CrustType.fromOptionNumber(choice).orElse((CrustType)null);
+        this.handleMenuChoice(selectedOption);
+        System.out.println("Select your size: ");
+        PizzaSize selectedSize;
+        this.pizzaSizeMenu();
+        choice = scanner.nextInt();
+        selectedSize = (PizzaSize)PizzaSize.fromOptionNumber(choice).orElse((PizzaSize)null);
+        this.handleMenuChoice(selectedSize);
     }
-
 
     private void menuHeader(String label) {
         if (label.equals("homescreen")) {
@@ -58,6 +70,8 @@ public class UserInterface {
         System.out.println(RED + "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯" + RESET);
     }
 
+    //displaying menu options
+
     private void homeMenu() {
         for(HomeMenuOptions option : HomeMenuOptions.values()) {
             System.out.printf("%-3d%s%n", option.getOptionNumber(), option.getOptionName());
@@ -72,6 +86,23 @@ public class UserInterface {
 
         System.out.println();
     }
+    private void crustMenu() {
+        for(CrustType option : CrustType.values()) {
+            System.out.printf("%-3d%s%n", option.getOptionNumber(), option.getOptionName());
+        }
+
+        System.out.println();
+    }
+
+    private void pizzaSizeMenu() {
+        for(PizzaSize option : PizzaSize.values()) {
+            System.out.printf("%-3d%s%n", option.getOptionNumber(), option.getOptionName());
+        }
+
+        System.out.println();
+    }
+
+    //switch cases to make user input work with menu choices
 
     private void handleMenuChoice(HomeMenuOptions option) {
         if (option == null) {

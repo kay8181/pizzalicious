@@ -1,5 +1,8 @@
 package ui;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public enum CheckoutOptions {
     CONFIRM(1, "Confirm"),
     CANCEL(0, "Cancel");
@@ -19,5 +22,8 @@ public enum CheckoutOptions {
 
     public String getOptionName() {
         return optionName;
+    }
+    public static Optional<CheckoutOptions> fromOptionNumber(int optionNumber) {
+        return Arrays.stream(values()).filter((option) -> option.optionNumber == optionNumber).findFirst();
     }
 }

@@ -1,5 +1,8 @@
 package ui;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public enum PizzaSize {
     EIGHT(1, "8\""),
     TWELVE(2, "12\""),
@@ -20,5 +23,9 @@ public enum PizzaSize {
 
     public String getOptionName() {
         return optionName;
+    }
+
+    public static Optional<PizzaSize> fromOptionNumber(int optionNumber) {
+        return Arrays.stream(values()).filter((option) -> option.optionNumber == optionNumber).findFirst();
     }
 }

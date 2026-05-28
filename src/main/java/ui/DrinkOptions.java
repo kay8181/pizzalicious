@@ -1,5 +1,8 @@
 package ui;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public enum DrinkOptions {
     SMALL("S", "Small"),
     MEDIUM("M", "Medium"),
@@ -20,5 +23,9 @@ public enum DrinkOptions {
 
     public String getOptionName() {
         return optionName;
+    }
+
+    public static Optional<DrinkOptions> fromOptionNumber(String optionSize) {
+        return Arrays.stream(values()).filter((option) -> option.optionSize == optionSize).findFirst();
     }
 }

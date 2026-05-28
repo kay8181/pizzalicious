@@ -1,5 +1,8 @@
 package ui;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public enum CrustType {
     THIN(1, "Thin Crust"),
     REGULAR(2, "Regular Crust"),
@@ -21,5 +24,8 @@ public enum CrustType {
 
     public String getOptionName() {
         return optionName;
+    }
+    public static Optional<CrustType> fromOptionNumber(int optionNumber) {
+        return Arrays.stream(values()).filter((option) -> option.optionNumber == optionNumber).findFirst();
     }
 }
