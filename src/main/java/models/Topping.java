@@ -219,5 +219,38 @@ public class Topping {
         }
     }
 
+    public void totalMeat () {
+        for (String meat : this.meat) {
+            System.out.println(meat);
+        }
+    }
+
+    public void totalCheese() {
+        for (String cheese : this.cheese) {
+            System.out.println(cheese);
+        }
+    }
+    public void totalRegularTopping() {
+        for(String regularTopping : this.regularToppings) {
+            System.out.println(regularTopping);
+        }
+    }
+
+    public void totalSauce() {
+        for (String sauce : this.sauce) {
+            System.out.println(sauce);
+        }
+    }
+
+    public void totalSide(){
+        for (String side : this.side) {
+            System.out.println(side);
+        }
+    }
+
+
+
+
+
 
 }

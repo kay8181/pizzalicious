@@ -2,14 +2,17 @@ package models;
 
 public class Pizza {
     String crustType;
-    int pizzaSize;
+    String pizzaSize;
     Topping toppings;
     boolean stuffedCrust;
     boolean extraCheese;
     boolean extraMeat;
     double price;
 
-    public Pizza(String crustType, int pizzaSize, Topping toppings, boolean stuffedCrust, boolean extraCheese, boolean extraMeat) {
+    public Pizza() {
+    }
+
+    public Pizza(String crustType, String pizzaSize, Topping toppings, boolean stuffedCrust, boolean extraCheese, boolean extraMeat) {
         this.crustType = crustType;
         this.pizzaSize = pizzaSize;
         this.toppings = toppings;
@@ -23,7 +26,7 @@ public class Pizza {
         return crustType;
     }
 
-    public int getPizzaSize() {
+    public String getPizzaSize() {
         return pizzaSize;
     }
 
@@ -55,7 +58,7 @@ public class Pizza {
     public void setCrustType(String crustType) {
         this.crustType = crustType;
     }
-    public void setPizzaSize(int pizzaSize) {
+    public void setPizzaSize(String pizzaSize) {
         this.pizzaSize = pizzaSize;
     }
 
@@ -72,5 +75,17 @@ public class Pizza {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    public void totalPizzaDisplay() {
+        System.out.println(this.crustType + "\n" + this.pizzaSize);
+        this.toppings.totalMeat();
+        this.toppings.totalCheese();
+        this.toppings.totalRegularTopping();
+        this.toppings.totalSauce();
+        this.toppings.totalSide();
+        System.out.println(this.extraCheese + "\n" + this.extraMeat);
+
+    }
+
 
 }

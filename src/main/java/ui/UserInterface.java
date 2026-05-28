@@ -1,5 +1,7 @@
 package ui;
 
+import models.Drink;
+import models.Pizza;
 import models.Topping;
 
 import java.util.Scanner;
@@ -42,18 +44,21 @@ public class UserInterface {
     }
 
     public void pizzaDisplay() {
+        Pizza pizza = new Pizza();
+
         System.out.println("Select your crust: ");
         CrustType selectedOption;
         this.crustMenu();
         int choice = scanner.nextInt();
         selectedOption = (CrustType)CrustType.fromOptionNumber(choice).orElse((CrustType)null);
-        this.handleMenuChoice(selectedOption);
+        this.handleMenuChoice(selectedOption, pizza);
         System.out.println("Select your size: ");
         PizzaSize selectedSize;
         this.pizzaSizeMenu();
         choice = scanner.nextInt();
         selectedSize = (PizzaSize)PizzaSize.fromOptionNumber(choice).orElse((PizzaSize)null);
-        this.handleMenuChoice(selectedSize);
+        this.handleMenuChoice(selectedSize, pizza);
+
         System.out.println("Select your Toppings: ");
         Topping topping = new Topping();
 
@@ -66,9 +71,8 @@ public class UserInterface {
             topping.addMeat(selectedMeat);
             System.out.println("Topping(s) chosen:");
 
-            for (String meat : topping.getMeat()) {
-                System.out.println(meat);
-            }
+            topping.totalMeat();
+
             System.out.println("\nChoose another meat option or continue:");
         } while(selectedMeat != MeatOption.CONTINUE);
 
@@ -81,9 +85,8 @@ public class UserInterface {
             topping.addCheese(selectedCheese);
             System.out.println("Topping(s) chosen:");
 
-            for (String cheese : topping.getCheese()) {
-                System.out.println(cheese);
-            }
+            topping.totalCheese();
+
             System.out.println("\nChoose another cheese option or continue:");
         } while(selectedCheese != CheeseOption.CONTINUE);
 
@@ -96,9 +99,8 @@ public class UserInterface {
             topping.addRegularTopping(selectedTopping);
             System.out.println("Topping(s) chosen:");
 
-            for (String regularTopping : topping.getRegularToppings()) {
-                System.out.println(regularTopping);
-            }
+           topping.totalRegularTopping();
+
             System.out.println("\nChoose another regular topping option or continue:");
         } while(selectedTopping != RegularTopping.CONTINUE);
 
@@ -117,6 +119,7 @@ public class UserInterface {
             System.out.println("\nChoose another sauce option or continue:");
         } while(selectedSauce != SauceOption.CONTINUE);
 
+
         SideOption selectedSide;
         System.out.println("Choose a side option or continue:");
         do {
@@ -126,14 +129,38 @@ public class UserInterface {
             topping.addSide(selectedSide);
             System.out.println("Side(s) chosen:");
 
-            for (String side : topping.getSide()) {
-                System.out.println(side);
-            }
+            topping.totalSide();
+
             System.out.println("\nChoose another side option or continue:");
         } while(selectedSide != SideOption.CONTINUE);
 
+        pizza.setToppings(topping);
 
+        System.out.println("Would you like stuffed crust?");
+        String chosenOption = scanner.nextLine();
+        if(chosenOption.equalsIgnoreCase("yes")) {
+            pizza.setStuffedCrust(true);
+        } else {
+            pizza.setStuffedCrust(false);
+        }
 
+        System.out.println("Would you like extra meat?");
+         chosenOption = scanner.nextLine();
+        if(chosenOption.equalsIgnoreCase("yes")) {
+            pizza.setExtraMeat(true);
+        } else {
+            pizza.setExtraMeat(false);
+        }
+
+        System.out.println("Would you like extra cheese?");
+        chosenOption = scanner.nextLine();
+        if(chosenOption.equalsIgnoreCase("yes")) {
+            pizza.setExtraCheese(true);
+        } else {
+            pizza.setExtraCheese(false);
+        }
+
+        pizza.totalPizzaDisplay();
 
     }
 
@@ -269,19 +296,22 @@ public class UserInterface {
     }
 
 
-    private void handleMenuChoice(PizzaSize option) {
+    private void handleMenuChoice(PizzaSize option, Pizza pizza) {
         if (option == null) {
             System.out.println("Invalid option. Please try again.");
         } else {
 
             switch (option) {
                 case EIGHT:
+                    pizza.setPizzaSize("8\"");
                     break;
 
                 case TWELVE:
+                    pizza.setPizzaSize("12\"");
                     break;
 
                 case SIXTEEN:
+                    pizza.setPizzaSize("16\"");
 
             }
 
@@ -289,19 +319,22 @@ public class UserInterface {
         }
     }
 
-    private void handleMenuChoice(DrinkOptions option) {
+    private void handleMenuChoice(DrinkOptions option, Drink drink) {
         if (option == null) {
             System.out.println("Invalid option. Please try again.");
         } else {
 
             switch (option) {
                 case SMALL:
+                    drink.setSize("Small");
                     break;
 
                 case MEDIUM:
+                    drink.setSize("Medium");
                     break;
 
                 case LARGE:
+                    drink.setSize("Large");
 
             }
 
@@ -309,22 +342,26 @@ public class UserInterface {
         }
     }
 
-    private void handleMenuChoice(CrustType option) {
+    private void handleMenuChoice(CrustType option, Pizza pizza) {
         if (option == null) {
             System.out.println("Invalid option. Please try again.");
         } else {
 
             switch (option) {
                 case THIN:
+                    pizza.setCrustType("Thin Crust");
                     break;
 
                 case REGULAR:
+                    pizza.setCrustType("Regular Crust");
                     break;
 
                 case THICK:
+                    pizza.setCrustType("Thick Crust");
                     break;
 
                 case CAULIFLOWER:
+                    pizza.setCrustType("Cauliflower Crust");
 
             }
 
