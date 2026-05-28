@@ -24,6 +24,22 @@ public class UserInterface {
 
         System.out.println("Goodbye!");
     }
+    public void orderDisplay() {
+
+        OrderMenuOptions selectedOption;
+        do {
+            this.menuHeader("            ORDER MENU   ");
+            this.orderMenu();
+            int choice = scanner.nextInt();
+            selectedOption = (OrderMenuOptions)OrderMenuOptions.fromOptionNumber(choice).orElse((OrderMenuOptions)null);
+            this.handleMenuChoice(selectedOption);
+        } while(selectedOption != OrderMenuOptions.CANCEL_ORDER);
+
+    }
+
+    public void pizzaDisplay() {
+
+    }
 
 
     private void menuHeader(String label) {
@@ -44,7 +60,14 @@ public class UserInterface {
 
     private void homeMenu() {
         for(HomeMenuOptions option : HomeMenuOptions.values()) {
-            System.out.printf("%-3d - %s%n", option.getOptionNumber(), option.getOptionName());
+            System.out.printf("%-3d%s%n", option.getOptionNumber(), option.getOptionName());
+        }
+
+        System.out.println();
+    }
+    private void orderMenu() {
+        for(OrderMenuOptions option : OrderMenuOptions.values()) {
+            System.out.printf("%-3d%s%n", option.getOptionNumber(), option.getOptionName());
         }
 
         System.out.println();
@@ -56,8 +79,7 @@ public class UserInterface {
         } else {
             switch (option) {
                 case NEW_ORDER:
-                    this.orderMenuOptions();
-
+                    this.orderDisplay();
                     break;
 
                 case EXIT:
@@ -73,6 +95,7 @@ public class UserInterface {
 
             switch (option) {
                 case ADD_PIZZA:
+                    this.pizzaDisplay();
                     break;
 
                 case ADD_DRINK:
@@ -91,28 +114,6 @@ public class UserInterface {
         }
     }
 
-    private void handleMenuChoice(ToppingOptions option) {
-        if (option == null) {
-            System.out.println("Invalid option. Please try again.");
-        } else {
-
-            switch (option) {
-                case MEAT:
-                    break;
-
-                case CHEESE:
-                    break;
-
-                case REGULAR_TOPPINGS:
-                    break;
-
-                case SAUCES:
-
-            }
-
-
-        }
-    }
 
     private void handleMenuChoice(PizzaSize option) {
         if (option == null) {
@@ -191,8 +192,5 @@ public class UserInterface {
         }
     }
 
-    private void orderMenuOptions() {
-
-    }
 
 }

@@ -1,5 +1,8 @@
 package ui;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public enum OrderMenuOptions {
     ADD_PIZZA(1, "Add Pizza"),
     ADD_DRINK(2, "Add Drink"),
@@ -22,6 +25,18 @@ public enum OrderMenuOptions {
 
     public String getOptionName() {
         return optionName;
+    }
+
+    public static Optional<OrderMenuOptions> fromOptionNumber(int optionNumber) {
+        return Arrays.stream(values()).filter((option) -> option.optionNumber == optionNumber).findFirst();
+    }
+
+    private void OrderMenu() {
+        for(OrderMenuOptions option : OrderMenuOptions.values()) {
+            System.out.printf("%-3d - %s%n", option.getOptionNumber(), option.getOptionName());
+        }
+
+        System.out.println();
     }
 
 }
