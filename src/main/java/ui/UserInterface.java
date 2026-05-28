@@ -1,5 +1,7 @@
 package ui;
 
+import models.Topping;
+
 import java.util.Scanner;
 
 public class UserInterface {
@@ -52,6 +54,87 @@ public class UserInterface {
         choice = scanner.nextInt();
         selectedSize = (PizzaSize)PizzaSize.fromOptionNumber(choice).orElse((PizzaSize)null);
         this.handleMenuChoice(selectedSize);
+        System.out.println("Select your Toppings: ");
+        Topping topping = new Topping();
+
+        MeatOption selectedMeat;
+        System.out.println("Choose a meat option or continue:");
+        do {
+            this.meatOptionDisplay();
+            choice = scanner.nextInt();
+            selectedMeat = (MeatOption)MeatOption.fromOptionNumber(choice).orElse((MeatOption)null);
+            topping.addMeat(selectedMeat);
+            System.out.println("Topping(s) chosen:");
+
+            for (String meat : topping.getMeat()) {
+                System.out.println(meat);
+            }
+            System.out.println("\nChoose another meat option or continue:");
+        } while(selectedMeat != MeatOption.CONTINUE);
+
+        CheeseOption selectedCheese;
+        System.out.println("Choose a cheese option or continue:");
+        do {
+            this.cheeseOptionDisplay();
+            choice = scanner.nextInt();
+            selectedCheese = (CheeseOption)CheeseOption.fromOptionNumber(choice).orElse((CheeseOption)null);
+            topping.addCheese(selectedCheese);
+            System.out.println("Topping(s) chosen:");
+
+            for (String cheese : topping.getCheese()) {
+                System.out.println(cheese);
+            }
+            System.out.println("\nChoose another cheese option or continue:");
+        } while(selectedCheese != CheeseOption.CONTINUE);
+
+        RegularTopping selectedTopping;
+        System.out.println("Choose a regular topping option or continue:");
+        do {
+            this.regularToppingDisplay();
+            choice = scanner.nextInt();
+            selectedTopping = (RegularTopping)RegularTopping.fromOptionNumber(choice).orElse((RegularTopping)null);
+            topping.addRegularTopping(selectedTopping);
+            System.out.println("Topping(s) chosen:");
+
+            for (String regularTopping : topping.getRegularToppings()) {
+                System.out.println(regularTopping);
+            }
+            System.out.println("\nChoose another regular topping option or continue:");
+        } while(selectedTopping != RegularTopping.CONTINUE);
+
+        SauceOption selectedSauce;
+        System.out.println("Choose a sauce option or continue:");
+        do {
+            this.sauceOptionDisplay();
+            choice = scanner.nextInt();
+            selectedSauce = (SauceOption)SauceOption.fromOptionNumber(choice).orElse((SauceOption)null);
+            topping.addSauce(selectedSauce);
+            System.out.println("Topping(s) chosen:");
+
+            for (String sauce : topping.getSauce()) {
+                System.out.println(sauce);
+            }
+            System.out.println("\nChoose another sauce option or continue:");
+        } while(selectedSauce != SauceOption.CONTINUE);
+
+        SideOption selectedSide;
+        System.out.println("Choose a side option or continue:");
+        do {
+            this.sideOptionDisplay();
+            choice = scanner.nextInt();
+            selectedSide = (SideOption)SideOption.fromOptionNumber(choice).orElse((SideOption)null);
+            topping.addSide(selectedSide);
+            System.out.println("Side(s) chosen:");
+
+            for (String side : topping.getSide()) {
+                System.out.println(side);
+            }
+            System.out.println("\nChoose another side option or continue:");
+        } while(selectedSide != SideOption.CONTINUE);
+
+
+
+
     }
 
     private void menuHeader(String label) {
@@ -101,6 +184,46 @@ public class UserInterface {
 
         System.out.println();
     }
+
+    private void meatOptionDisplay() {
+        for(MeatOption option : MeatOption.values()) {
+            System.out.printf("%-3d%s%n", option.getOptionNumber(), option.getOptionName());
+        }
+
+        System.out.println();
+    }
+
+    private void cheeseOptionDisplay() {
+        for(CheeseOption option : CheeseOption.values()) {
+            System.out.printf("%-3d%s%n", option.getOptionNumber(), option.getOptionName());
+        }
+
+        System.out.println();
+    }
+
+    private void regularToppingDisplay() {
+        for(RegularTopping option : RegularTopping.values()) {
+            System.out.printf("%-3d%s%n", option.getOptionNumber(), option.getOptionName());
+        }
+
+        System.out.println();
+    }
+    private void sauceOptionDisplay() {
+        for(SauceOption option : SauceOption.values()) {
+            System.out.printf("%-3d%s%n", option.getOptionNumber(), option.getOptionName());
+        }
+
+        System.out.println();
+    }
+
+    private void sideOptionDisplay() {
+        for(SideOption option : SideOption.values()) {
+            System.out.printf("%-3d%s%n", option.getOptionNumber(), option.getOptionName());
+        }
+
+        System.out.println();
+    }
+
 
     //switch cases to make user input work with menu choices
 
