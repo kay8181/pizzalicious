@@ -35,7 +35,18 @@ public class Order {
         this.garlicKnot.add(garlicKnot);
     }
 
-    //calculating total price of pizza(s), drink(s) and garlic knots
+    public ArrayList<Pizza> getPizza() {
+        return pizza;
+    }
+
+    public ArrayList<GarlicKnots> getGarlicKnot() {
+        return garlicKnot;
+    }
+
+    public ArrayList<Drink> getDrink() {
+        return drink;
+    }
+//calculating total price of pizza(s), drink(s) and garlic knots
 
     public void calculatePrice () {
         double runningTotal = 0;
@@ -58,7 +69,7 @@ public class Order {
 
         for (Pizza item : pizza) {
             item.totalPizzaDisplay();
-            System.out.println(item.getPrice());
+            System.out.println(formatPrice(item.getPrice()));
         }
 
         if (!drink.isEmpty()) {
@@ -66,7 +77,7 @@ public class Order {
         }
         for (Drink item : drink) {
             System.out.println(item.getSize() + " Drink");
-            System.out.println(item.getPrice());
+            System.out.println(formatPrice(item.getPrice()));
         }
 
         if (!garlicKnot.isEmpty()) {
@@ -74,10 +85,10 @@ public class Order {
         }
         for (GarlicKnots item : garlicKnot) {
             System.out.println("Garlic Knot");
-            System.out.println(item.getPrice());
+            System.out.println(formatPrice(item.getPrice()));
         }
 
-        System.out.println("Total: " + this.price);
+        System.out.println("Total: " + formatPrice(this.price));
 
     }
 
@@ -86,23 +97,27 @@ public class Order {
 
         for (Pizza item : pizza) {
             stringy.append(item.totalPizzaString()+"\n");
-            stringy.append(item.getPrice()+"\n");
+            stringy.append(formatPrice(item.getPrice())+"\n");
         }
 
         for (Drink item : drink) {
             stringy.append(item.getSize() + " Drink\n");
-            stringy.append(item.getPrice()+"\n");
+            stringy.append(formatPrice(item.getPrice())+"\n");
         }
 
         for (GarlicKnots item : garlicKnot) {
             stringy.append("Garlic Knot\n");
-            stringy.append(item.getPrice()+"\n");
+            stringy.append(formatPrice(item.getPrice())+"\n");
         }
 
-//        stringy.append("Total: " + this.price);
-        stringy.append(String.format("Total: $%.2f", this.price));
+        stringy.append("Total: " + formatPrice(this.price));
+//        stringy.append(String.format("Total: $%.2f", this.price));
 
         return stringy.toString();
+    }
+
+    public String formatPrice(double price) {
+        return String.format("$%.2f", price);
     }
 
 }

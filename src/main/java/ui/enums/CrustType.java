@@ -1,21 +1,18 @@
-package ui;
+package ui.enums;
 
 import java.util.Arrays;
 import java.util.Optional;
 
-public enum SauceOption {
-    MARINARA(1, "Marinara"),
-    ALFREDO(2, "Alfredo"),
-    PESTO(3, "Pesto"),
-    BBQ(4, "BBQ"),
-    BUFFALO(5, "Buffalo"),
-    OLIVE_OIL(6, "Olive Oil"),
-    CONTINUE(0, "Continue");
+public enum CrustType {
+    THIN(1, "Thin Crust"),
+    REGULAR(2, "Regular Crust"),
+    THICK(3, "Thick Crust"),
+    CAULIFLOWER(4, "Cauliflower Crust");
 
     private final int optionNumber;
     private final String optionName;
 
-    private SauceOption(int optionNumber, String optionName) {
+    private CrustType(int optionNumber, String optionName) {
         this.optionNumber = optionNumber;
         this.optionName = optionName;
 
@@ -28,7 +25,7 @@ public enum SauceOption {
     public String getOptionName() {
         return optionName;
     }
-    public static Optional<SauceOption> fromOptionNumber(int optionNumber) {
+    public static Optional<CrustType> fromOptionNumber(int optionNumber) {
         return Arrays.stream(values()).filter((option) -> option.optionNumber == optionNumber).findFirst();
     }
 }

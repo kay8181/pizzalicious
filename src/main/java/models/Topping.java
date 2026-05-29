@@ -1,6 +1,6 @@
 package models;
 
-import ui.*;
+import ui.enums.*;
 
 import java.util.ArrayList;
 
@@ -264,6 +264,10 @@ public class Topping {
                 .filter(item -> item.toLowerCase().contains(searchTerm.toLowerCase()))
                 .count();
         return count > 0;
+    }
+
+    public String formatPrice(double price) {
+        return String.format("$.2f", price);
     }
 
 

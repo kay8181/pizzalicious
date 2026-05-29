@@ -6,12 +6,12 @@ import java.io.IOException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
-public class ReceiptWriter {
-    LocalTime time;
-    LocalDate date;
-    Order order;
+public class receiptWriter {
+    private LocalTime time;
+    private LocalDate date;
+    private Order order;
 
-    public ReceiptWriter(Order order) {
+    public receiptWriter(Order order) {
         this.time = LocalTime.now();
         this.date = LocalDate.now();
         this.order = order;
@@ -45,7 +45,7 @@ public class ReceiptWriter {
         bufWriter.write(receiptHeader2);
         bufWriter.write(receiptHeader3);
         bufWriter.write(receiptBody);
-        bufWriter.write(formattedDate+" "+formattedTime);
+        bufWriter.write("\n\n"+formattedDate+" "+formattedTime);
         bufWriter.write(receiptFooter);
         bufWriter.close();
     }
