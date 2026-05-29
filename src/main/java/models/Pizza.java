@@ -76,6 +76,8 @@ public class Pizza {
         this.price = price;
     }
 
+    //displaying pizza type and toppings
+
     public void totalPizzaDisplay() {
         System.out.println("            PIZZA:   ");
         System.out.println(this.crustType + "\n" + this.pizzaSize);
@@ -87,6 +89,8 @@ public class Pizza {
         System.out.println(this.extraCheese + "\n" + this.extraMeat);
 
     }
+
+    //calculating pizza price based on size, extras and chosen toppings
 
     public void calculatePizzaPrice() {
         double runningTotal = 0;

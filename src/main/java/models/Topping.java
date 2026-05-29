@@ -80,6 +80,8 @@ public class Topping {
         return side;
     }
 
+    //adding chosen items to list of toppings
+
     public void addMeat(MeatOption option) {
 
         if (option == null) {
@@ -155,6 +157,8 @@ public class Topping {
         }
     }
 
+    //showing chosen toppings
+
     public void totalMeat () {
         for (String meat : this.meat) {
             System.out.println(meat);
@@ -183,6 +187,8 @@ public class Topping {
             System.out.println(side);
         }
     }
+
+    // checking for duplicate topping picks
 
     public boolean duplicateCheck(ArrayList<String> list, String searchTerm) {
 

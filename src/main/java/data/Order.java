@@ -22,6 +22,8 @@ public class Order {
     public Order() {
     }
 
+    // adding individual food items to the order
+
     public void addPizza(Pizza pizza) {
         this.pizza.add(pizza);
     }
@@ -32,6 +34,8 @@ public class Order {
     public void addGarlicKnots(GarlicKnots garlicKnot) {
         this.garlicKnot.add(garlicKnot);
     }
+
+    //calculating total price of pizza(s), drink(s) and garlic knots
 
     public void calculatePrice () {
        double runningTotal = 0;
@@ -48,7 +52,9 @@ public class Order {
         this.price = runningTotal;
     }
 
-    public void displayTotalorder() {
+    // displaying entire order
+
+    public void displayTotalOrder() {
         for(Pizza item : pizza) {
             item.totalPizzaDisplay();
             System.out.println(item.getPrice());
