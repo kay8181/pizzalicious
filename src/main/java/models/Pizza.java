@@ -77,7 +77,7 @@ public class Pizza {
     }
 
     public void totalPizzaDisplay() {
-        System.out.println("            FINISHED PIZZA:   ");
+        System.out.println("            PIZZA:   ");
         System.out.println(this.crustType + "\n" + this.pizzaSize);
         this.toppings.totalMeat();
         this.toppings.totalCheese();
@@ -87,6 +87,60 @@ public class Pizza {
         System.out.println(this.extraCheese + "\n" + this.extraMeat);
 
     }
+
+    public void calculatePizzaPrice() {
+        double runningTotal = 0;
+        switch(this.pizzaSize) {
+            case "8\"":
+                runningTotal += 8.50;
+                if(this.toppings.getMeat().size() > 0) {
+                    runningTotal += 1.00;
+                }
+                if(this.toppings.isExtraMeat()) {
+                    runningTotal += .50;
+                }
+                if(this.toppings.getCheese().size() > 0) {
+                    runningTotal += .75;
+                }
+                if(this.toppings.isExtraCheese()) {
+                    runningTotal += .30;
+                }
+                break;
+            case "12\"":
+                runningTotal += 12.00;
+                if(this.toppings.getMeat().size() > 0) {
+                    runningTotal += 2.00;
+                }
+                if(this.toppings.isExtraMeat()) {
+                    runningTotal += 1.00;
+                }
+                if(this.toppings.getCheese().size() > 0) {
+                    runningTotal += 1.50;
+                }
+                if(this.toppings.isExtraCheese()) {
+                    runningTotal += .60;
+                }
+                break;
+            case "16\"":
+                runningTotal += 16.50;
+                if(this.toppings.getMeat().size() > 0) {
+                    runningTotal += 3.00;
+                }
+                if(this.toppings.isExtraMeat()) {
+                    runningTotal += 1.50;
+                }
+                if(this.toppings.getCheese().size() > 0) {
+                    runningTotal += 2.25;
+                }
+                if(this.toppings.isExtraCheese()) {
+                    runningTotal += .90;
+                }
+
+
+        }
+    }
+
+
 
 
 }

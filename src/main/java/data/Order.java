@@ -48,4 +48,22 @@ public class Order {
         this.price = runningTotal;
     }
 
+    public void displayTotalorder() {
+        for(Pizza item : pizza) {
+            item.totalPizzaDisplay();
+            System.out.println(item.getPrice());
+        }
+
+        for( Drink item : drink) {
+            System.out.println(item.getSize() + " Drink");
+            System.out.println( item.getPrice());
+        }
+
+        for(GarlicKnots item : garlicKnot) {
+            System.out.println("Garlic Knot");
+            System.out.println(item.getPrice());
+        }
+
+    }
+
 }
