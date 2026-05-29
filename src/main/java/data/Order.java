@@ -100,12 +100,16 @@ public class Order {
             stringy.append(item.totalPizzaString()+"\n");
             stringy.append(formatPrice(item.getPrice())+"\n");
         }
-
+        if (!drink.isEmpty()) {
+            stringy.append("            DRINKS:\n");
+        }
         for (Drink item : drink) {
             stringy.append(item.getSize() + " Drink\n");
             stringy.append(formatPrice(item.getPrice())+"\n");
         }
-
+        if (!garlicKnot.isEmpty()) {
+            stringy.append("            OTHERS:\n");
+        }
         for (GarlicKnots item : garlicKnot) {
             stringy.append("Garlic Knot\n");
             stringy.append(formatPrice(item.getPrice())+"\n");
