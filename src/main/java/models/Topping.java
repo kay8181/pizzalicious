@@ -205,7 +205,7 @@ public class Topping {
         }
     }
 
-
+    //returning items to be recorded in the receipt
     public String totalMeatString () {
         StringBuilder stringy = new StringBuilder();
 

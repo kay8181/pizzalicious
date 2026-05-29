@@ -8,6 +8,8 @@ import models.Pizza;
 import models.Topping;
 import ui.enums.*;
 
+import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -31,8 +33,18 @@ public class UserInterface {
         do {
             this.menuHeader("homescreen");
             this.homeMenu();
-            int choice = scanner.nextInt();
-            selectedOption = (HomeMenuOptions)HomeMenuOptions.fromOptionNumber(choice).orElse((HomeMenuOptions)null);
+            int choice = -1;
+
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                choice = -1;
+                scanner.nextLine();
+            }
+
+            selectedOption = (HomeMenuOptions) HomeMenuOptions.fromOptionNumber(choice).orElse((HomeMenuOptions) null);
+
+
             this.handleMenuChoice(selectedOption);
         } while(selectedOption != HomeMenuOptions.EXIT);
 
@@ -46,7 +58,16 @@ public class UserInterface {
         do {
             this.menuHeader("            ORDER MENU   ");
             this.orderMenu();
-            int choice = scanner.nextInt();
+
+            int choice = -1;
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                choice = -1;
+                scanner.nextLine();
+            }
+
+
             selectedOption = (OrderMenuOptions)OrderMenuOptions.fromOptionNumber(choice).orElse((OrderMenuOptions)null);
             this.handleMenuChoice(selectedOption, order);
         } while(selectedOption != OrderMenuOptions.CANCEL_ORDER);
@@ -54,31 +75,74 @@ public class UserInterface {
     }
 
     public CrustType pizzaCrustDisplay() {
-        System.out.println("Select your crust: ");
         CrustType selectedOption;
-        this.crustMenu();
-        int choice = scanner.nextInt();
-        selectedOption = (CrustType)CrustType.fromOptionNumber(choice).orElse((CrustType)null);
+
+        int choice;
+        do {
+            System.out.println("Select your crust: ");
+            this.crustMenu();
+
+            choice = -1;
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                choice = -1;
+                scanner.nextLine();
+            }
+
+
+            selectedOption = (CrustType) CrustType.fromOptionNumber(choice).orElse((CrustType) null);
+
+            if (selectedOption == null) {
+                System.out.println("Invalid option. Please try again.");
+            }
+
+        } while (selectedOption == null);
 
         return selectedOption;
     }
 
     public PizzaSize pizzaSizeDisplay() {
-        System.out.println("Select your size: ");
         PizzaSize selectedSize;
-        this.pizzaSizeMenu();
-        int choice = scanner.nextInt();
-        selectedSize = (PizzaSize)PizzaSize.fromOptionNumber(choice).orElse((PizzaSize)null);
+
+        int choice;
+        do {
+            System.out.println("Select your size: ");
+            this.pizzaSizeMenu();
+
+            choice = -1;
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                choice = -1;
+                scanner.nextLine();
+            }
+
+            selectedSize = (PizzaSize) PizzaSize.fromOptionNumber(choice).orElse((PizzaSize) null);
+
+            if (selectedSize == null) {
+                System.out.println("Invalid option. Please try again.");
+            }
+
+        } while (selectedSize == null);
 
         return selectedSize;
     }
-
+    //adding user selections to topping
     public void pizzaMeatTopping(Topping topping) {
         MeatOption selectedMeat;
         System.out.println("Choose a meat option or continue:");
         do {
             this.meatOptionDisplay();
-            int choice = scanner.nextInt();
+            int choice;
+
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                choice = -1;
+                scanner.nextLine();
+            }
+
             selectedMeat = (MeatOption)MeatOption.fromOptionNumber(choice).orElse((MeatOption)null);
             topping.addMeat(selectedMeat);
             System.out.println("Meat(s) chosen:");
@@ -97,7 +161,14 @@ public class UserInterface {
         System.out.println("\nChoose a cheese option or continue:");
         do {
             this.cheeseOptionDisplay();
-            int choice = scanner.nextInt();
+            int choice;
+
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                choice = -1;
+                scanner.nextLine();
+            }
             selectedCheese = (CheeseOption)CheeseOption.fromOptionNumber(choice).orElse((CheeseOption)null);
             topping.addCheese(selectedCheese);
             System.out.println("Cheese(s) chosen:");
@@ -115,7 +186,14 @@ public class UserInterface {
         System.out.println("\nChoose a regular topping option or continue:");
         do {
             this.regularToppingDisplay();
-            int choice = scanner.nextInt();
+            int choice;
+
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                choice = -1;
+                scanner.nextLine();
+            }
             selectedTopping = (RegularTopping)RegularTopping.fromOptionNumber(choice).orElse((RegularTopping)null);
             topping.addRegularTopping(selectedTopping);
             System.out.println("Topping(s) chosen:");
@@ -132,7 +210,14 @@ public class UserInterface {
         System.out.println("\nChoose a sauce option or continue:");
         do {
             this.sauceOptionDisplay();
-            int choice = scanner.nextInt();
+            int choice;
+
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                choice = -1;
+                scanner.nextLine();
+            }
             selectedSauce = (SauceOption)SauceOption.fromOptionNumber(choice).orElse((SauceOption)null);
             topping.addSauce(selectedSauce);
             System.out.println("Sauce(s) chosen:");
@@ -150,7 +235,14 @@ public class UserInterface {
         System.out.println("\nChoose a side option or continue:");
         do {
             this.sideOptionDisplay();
-            int choice = scanner.nextInt();
+            int choice;
+
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                choice = -1;
+                scanner.nextLine();
+            }
             selectedSide = (SideOption)SideOption.fromOptionNumber(choice).orElse((SideOption)null);
             topping.addSide(selectedSide);
             System.out.println("Side(s) chosen:");
@@ -162,7 +254,7 @@ public class UserInterface {
             }
         } while(selectedSide != SideOption.CONTINUE);
     }
-
+    //asking user for order preferences and taking input
     public Pizza pizzaDisplay() {
         Pizza pizza = new Pizza();
 
@@ -218,10 +310,18 @@ public class UserInterface {
         Drink drink = new Drink();
         System.out.println("Select your drink size:");
         DrinkOptions selectedOption;
-        this.drinkMenu();
-        scanner.nextLine();
-        String choice = scanner.nextLine();
-        selectedOption = (DrinkOptions)DrinkOptions.fromOptionNumber(choice).orElse((DrinkOptions)null);
+
+        do {
+            this.drinkMenu();
+            scanner.nextLine();
+            String choice = scanner.nextLine();
+            selectedOption = (DrinkOptions) DrinkOptions.fromOptionNumber(choice).orElse((DrinkOptions) null);
+
+            if (selectedOption == null) {
+                System.out.println("Invalid option. Please try again.");
+            }
+        } while(selectedOption == null);
+
         this.handleMenuChoice(selectedOption, drink);
         drink.calculatePrice();
         return drink;
@@ -233,17 +333,32 @@ public class UserInterface {
         return garlicKnot;
 
     }
+    //showing order total and asking user to confirm checkout
     public void checkoutDisplay(Order order) {
         menuHeader("            TOTAL ORDER");
         order.calculatePrice();
         order.displayTotalOrder();
         CheckoutOptions selectedOption;
-        this.checkoutMenu();
-        int choice = scanner.nextInt();
-        selectedOption = (CheckoutOptions)CheckoutOptions.fromOptionNumber(choice).orElse((CheckoutOptions)null);
+
+        int choice;
+        do {
+
+            this.checkoutMenu();
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                choice = -1;
+                scanner.nextLine();
+            }
+            selectedOption = (CheckoutOptions) CheckoutOptions.fromOptionNumber(choice).orElse((CheckoutOptions) null);
+
+            if (selectedOption == null) {
+                System.out.println("Invalid option. Please try again.");
+            }
+        } while (selectedOption == null);
         this.handleMenuChoice(selectedOption, order);
     }
-
+    //printing headers
     private void menuHeader(String label) {
         if (label.equals("homescreen")) {
 
@@ -392,6 +507,7 @@ public class UserInterface {
                         System.out.println("Your order is empty.");
                         System.out.println("You must add at least one pizza, a drink, or garlic knots before you can checkout.");
                     } else {
+                        order.sortOrders();
                         checkoutDisplay(order);
                     }
 

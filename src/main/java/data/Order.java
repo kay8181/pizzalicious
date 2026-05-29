@@ -5,6 +5,7 @@ import models.GarlicKnots;
 import models.Pizza;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Order {
     private ArrayList<Pizza> pizza = new ArrayList<>();
@@ -118,6 +119,17 @@ public class Order {
 
     public String formatPrice(double price) {
         return String.format("$%.2f", price);
+    }
+
+    public void sortOrders() {
+        pizza.sort((o1, o2) -> o1.getDateTime().compareTo(o2.getDateTime()));
+        Collections.reverse(pizza);
+
+        drink.sort((o1, o2) -> o1.getDateTime().compareTo(o2.getDateTime()));
+        Collections.reverse(drink);
+
+        garlicKnot.sort((o1, o2) -> o1.getDateTime().compareTo(o2.getDateTime()));
+        Collections.reverse(garlicKnot);
     }
 
 }

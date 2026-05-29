@@ -1,5 +1,7 @@
 package models;
 
+import java.time.LocalDateTime;
+
 public class Pizza {
     private String crustType;
     private String pizzaSize;
@@ -8,8 +10,11 @@ public class Pizza {
     private boolean extraCheese;
     private boolean extraMeat;
     private double price;
+    private LocalDateTime dateTime;
+
 
     public Pizza() {
+        this.dateTime = LocalDateTime.now();
     }
 
     public Pizza(String crustType, String pizzaSize, Topping toppings, boolean stuffedCrust, boolean extraCheese, boolean extraMeat) {
@@ -19,6 +24,7 @@ public class Pizza {
         this.stuffedCrust = stuffedCrust;
         this.extraCheese = extraCheese;
         this.extraMeat = extraMeat;
+        this.dateTime = LocalDateTime.now();
     }
 
 
@@ -35,6 +41,10 @@ public class Pizza {
     }
     public double getPrice() {
         return price;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
     public boolean isStuffedCrust() {

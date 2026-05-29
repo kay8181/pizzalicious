@@ -1,10 +1,15 @@
 package models;
 
+import java.time.LocalDateTime;
+
 public class Drink {
     private String size;
     private double price;
+    private LocalDateTime dateTime;
+
 
     public Drink() {
+        this.dateTime = LocalDateTime.now();
     }
 
     public String getSize() {
@@ -14,6 +19,10 @@ public class Drink {
 
     public double getPrice() {
         return price;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
     public void setSize(String size) {
