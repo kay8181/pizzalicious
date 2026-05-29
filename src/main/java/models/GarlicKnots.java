@@ -1,7 +1,7 @@
 package models;
 
 public class GarlicKnots {
-    double price;
+    private double price;
 
     public GarlicKnots() {
         this.price = 1.50;

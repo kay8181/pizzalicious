@@ -1,13 +1,13 @@
 package models;
 
 public class Pizza {
-    String crustType;
-    String pizzaSize;
-    Topping toppings;
-    boolean stuffedCrust;
-    boolean extraCheese;
-    boolean extraMeat;
-    double price;
+    private String crustType;
+    private String pizzaSize;
+    private Topping toppings;
+    private boolean stuffedCrust;
+    private boolean extraCheese;
+    private boolean extraMeat;
+    private double price;
 
     public Pizza() {
     }
@@ -79,16 +79,54 @@ public class Pizza {
     //displaying pizza type and toppings
 
     public void totalPizzaDisplay() {
-        System.out.println("            PIZZA:   ");
+        System.out.println("            CUSTOMIZED PIZZA:");
         System.out.println(this.crustType + "\n" + this.pizzaSize);
         this.toppings.totalMeat();
         this.toppings.totalCheese();
         this.toppings.totalRegularTopping();
         this.toppings.totalSauce();
         this.toppings.totalSide();
-        System.out.println(this.extraCheese + "\n" + this.extraMeat);
+        if (this.stuffedCrust) {
+            System.out.println("Stuffed Crust");
+        }if (this.extraCheese) {
+            System.out.println("Extra Cheese");
+        }
+        if (this.extraMeat) {
+            System.out.println("Extra Meat");
+        }
 
     }
+
+    public String totalPizzaString() {
+        StringBuilder stringy = new StringBuilder();
+
+        stringy.append("            CUSTOMIZED PIZZA:\n");
+        stringy.append(this.crustType + "\n" + this.pizzaSize+"\n");
+        if(!this.toppings.totalMeatString().isEmpty()) {
+            stringy.append(this.toppings.totalMeatString()+"\n");
+        }
+        if(!this.toppings.totalCheeseString().isEmpty()) {
+            stringy.append(this.toppings.totalCheeseString() + "\n");
+        }
+        if(!this.toppings.totalRegularToppingString().isEmpty()) {
+            stringy.append(this.toppings.totalRegularToppingString() + "\n");
+        }
+        if(!this.toppings.totalSauceString().isEmpty()) {
+            stringy.append(this.toppings.totalSauceString() + "\n");
+        }
+        if(!this.toppings.totalSideString().isEmpty()) {
+            stringy.append(this.toppings.totalSideString() + "\n");
+        }
+        if (this.stuffedCrust) {
+            stringy.append("Stuffed Crust\n");
+        }if (this.extraCheese) {
+            stringy.append("Extra Cheese\n");
+        }
+        if (this.extraMeat) {
+            stringy.append("Extra Meat\n");
+        }
+        return stringy.toString();
+        }
 
     //calculating pizza price based on size, extras and chosen toppings
 
@@ -139,9 +177,8 @@ public class Pizza {
                 if(this.toppings.isExtraCheese()) {
                     runningTotal += .90;
                 }
-
-
         }
+        this.price = runningTotal;
     }
 
 

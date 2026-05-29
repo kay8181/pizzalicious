@@ -26,6 +26,6 @@ public enum DrinkOptions {
     }
 
     public static Optional<DrinkOptions> fromOptionNumber(String optionSize) {
-        return Arrays.stream(values()).filter((option) -> option.optionSize == optionSize).findFirst();
+        return Arrays.stream(values()).filter((option) -> option.optionSize.equalsIgnoreCase(optionSize)).findFirst();
     }
 }

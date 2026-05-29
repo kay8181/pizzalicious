@@ -5,13 +5,13 @@ import ui.*;
 import java.util.ArrayList;
 
 public class Topping {
-    boolean extraMeat;
-    boolean extraCheese;
-    ArrayList<String> meat;
-    ArrayList<String> cheese;
-    ArrayList<String> regularToppings;
-    ArrayList<String> sauce;
-    ArrayList<String> side;
+    private boolean extraMeat;
+    private boolean extraCheese;
+    private ArrayList<String> meat;
+    private ArrayList<String> cheese;
+    private ArrayList<String> regularToppings;
+    private ArrayList<String> sauce;
+    private ArrayList<String> side;
 
     public Topping() {
         this.extraCheese = false;
@@ -105,11 +105,16 @@ public class Topping {
         if (option == null) {
             System.out.println("Invalid option. Please try again.");
         } else {
-            switch (option) {
-                case MOZZARELLA, PARMESAN, RICOTTA, GOAT_CHEESE, BUFFALO:
-                    this.cheese.add(option.getOptionName());
-                    break;
-                case CONTINUE:
+            if(duplicateCheck(cheese, option.getOptionName())) {
+                System.out.println("Option already added.");
+            }
+            else {
+                switch (option) {
+                    case MOZZARELLA, PARMESAN, RICOTTA, GOAT_CHEESE, BUFFALO:
+                        this.cheese.add(option.getOptionName());
+                        break;
+                    case CONTINUE:
+                }
             }
 
         }
@@ -119,11 +124,16 @@ public class Topping {
         if (option == null) {
             System.out.println("Invalid option. Please try again.");
         } else {
-            switch (option) {
-                case ONIONS,MUSHROOMS, BELL_PEPPERS, OLIVES,TOMATOES, SPINACH, BASIL,PINEAPPLE, ANCHOVIES:
+            if(duplicateCheck(regularToppings, option.getOptionName())) {
+            System.out.println("Option already added.");
+            }
+            else {
+                switch (option) {
+                    case ONIONS,MUSHROOMS, BELL_PEPPERS, OLIVES,TOMATOES, SPINACH, BASIL,PINEAPPLE, ANCHOVIES:
                     this.regularToppings.add(option.getOptionName());
                     break;
-                case CONTINUE:
+                    case CONTINUE:
+                }
             }
 
         }
@@ -133,12 +143,19 @@ public class Topping {
         if (option == null) {
             System.out.println("Invalid option. Please try again.");
         } else {
-            switch (option) {
-                case MARINARA,ALFREDO, PESTO, BBQ, BUFFALO, OLIVE_OIL:
-                    this.sauce.add(option.getOptionName());
-                    break;
-                case CONTINUE:
+            if(duplicateCheck(sauce, option.getOptionName())) {
+                System.out.println("Option already added.");
             }
+            else {
+                switch (option) {
+                    case MARINARA,ALFREDO, PESTO, BBQ, BUFFALO, OLIVE_OIL:
+                        this.sauce.add(option.getOptionName());
+                        break;
+                    case CONTINUE:
+                }
+
+            }
+
 
         }
     }
@@ -186,6 +203,57 @@ public class Topping {
         for (String side : this.side) {
             System.out.println(side);
         }
+    }
+
+
+    public String totalMeatString () {
+        StringBuilder stringy = new StringBuilder();
+
+        for (String meat : this.meat) {
+            stringy.append(meat);
+        }
+
+        return stringy.toString();
+    }
+
+    public String totalCheeseString () {
+        StringBuilder stringy = new StringBuilder();
+                
+        for (String cheese : this.cheese) {
+            stringy.append(cheese);
+        }
+
+        return stringy.toString();
+    }
+
+    public String totalRegularToppingString () {
+        StringBuilder stringy = new StringBuilder();
+
+        for (String regularTopping : this.regularToppings) {
+            stringy.append(regularTopping);
+        }
+
+        return stringy.toString();
+    }
+
+    public String totalSauceString () {
+        StringBuilder stringy = new StringBuilder();
+
+        for (String sauce : this.sauce) {
+            stringy.append(sauce);
+        }
+
+        return stringy.toString();
+    }
+
+    public String totalSideString () {
+        StringBuilder stringy = new StringBuilder();
+
+        for (String side : this.side) {
+            stringy.append(side);
+        }
+
+        return stringy.toString();
     }
 
     // checking for duplicate topping picks

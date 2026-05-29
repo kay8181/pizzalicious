@@ -1,8 +1,8 @@
 package models;
 
 public class Drink {
-    String size;
-    double price;
+    private String size;
+    private double price;
 
     public Drink() {
     }
@@ -25,7 +25,6 @@ public class Drink {
 
     public Drink(String size) {
         this.size = size;
-        calculatePrice();
 
     }
 

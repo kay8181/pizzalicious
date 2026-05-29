@@ -1,11 +1,13 @@
 package ui;
 
 import data.Order;
+import data.ReceiptWriter;
 import models.Drink;
 import models.GarlicKnots;
 import models.Pizza;
 import models.Topping;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -15,7 +17,6 @@ public class UserInterface {
     Scanner scanner = new Scanner(System.in);
 
     public void start(){
-       Order order = new Order();
         homeDisplay();
     }
 
@@ -39,18 +40,20 @@ public class UserInterface {
     }
     public void orderDisplay() {
 
+        Order order = new Order();
+
         OrderMenuOptions selectedOption;
         do {
             this.menuHeader("            ORDER MENU   ");
             this.orderMenu();
             int choice = scanner.nextInt();
             selectedOption = (OrderMenuOptions)OrderMenuOptions.fromOptionNumber(choice).orElse((OrderMenuOptions)null);
-            this.handleMenuChoice(selectedOption);
+            this.handleMenuChoice(selectedOption, order);
         } while(selectedOption != OrderMenuOptions.CANCEL_ORDER);
 
     }
 
-    public void pizzaDisplay() {
+    public Pizza pizzaDisplay() {
         Pizza pizza = new Pizza();
 
         System.out.println("Select your crust: ");
@@ -66,9 +69,7 @@ public class UserInterface {
         selectedSize = (PizzaSize)PizzaSize.fromOptionNumber(choice).orElse((PizzaSize)null);
         this.handleMenuChoice(selectedSize, pizza);
 
-        System.out.println("            TOPPINGS   ");
-        System.out.println(GREEN + "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯" + RESET);
-        System.out.println(RED + "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯" + RESET);
+        menuHeader("            TOPPINGS");
         Topping topping = new Topping();
 
         MeatOption selectedMeat;
@@ -78,7 +79,7 @@ public class UserInterface {
             choice = scanner.nextInt();
             selectedMeat = (MeatOption)MeatOption.fromOptionNumber(choice).orElse((MeatOption)null);
             topping.addMeat(selectedMeat);
-            System.out.println("Topping(s) chosen:");
+            System.out.println("Meat(s) chosen:");
 
             topping.totalMeat();
 
@@ -88,13 +89,13 @@ public class UserInterface {
         } while(selectedMeat != MeatOption.CONTINUE);
 
         CheeseOption selectedCheese;
-        System.out.println("Choose a cheese option or continue:");
+        System.out.println("\nChoose a cheese option or continue:");
         do {
             this.cheeseOptionDisplay();
             choice = scanner.nextInt();
             selectedCheese = (CheeseOption)CheeseOption.fromOptionNumber(choice).orElse((CheeseOption)null);
             topping.addCheese(selectedCheese);
-            System.out.println("Topping(s) chosen:");
+            System.out.println("Cheese(s) chosen:");
 
             topping.totalCheese();
 
@@ -104,7 +105,7 @@ public class UserInterface {
         } while(selectedCheese != CheeseOption.CONTINUE);
 
         RegularTopping selectedTopping;
-        System.out.println("Choose a regular topping option or continue:");
+        System.out.println("\nChoose a regular topping option or continue:");
         do {
             this.regularToppingDisplay();
             choice = scanner.nextInt();
@@ -118,13 +119,13 @@ public class UserInterface {
         } while(selectedTopping != RegularTopping.CONTINUE);
 
         SauceOption selectedSauce;
-        System.out.println("Choose a sauce option or continue:");
+        System.out.println("\nChoose a sauce option or continue:");
         do {
             this.sauceOptionDisplay();
             choice = scanner.nextInt();
             selectedSauce = (SauceOption)SauceOption.fromOptionNumber(choice).orElse((SauceOption)null);
             topping.addSauce(selectedSauce);
-            System.out.println("Topping(s) chosen:");
+            System.out.println("Sauce(s) chosen:");
 
             topping.totalSauce();
 
@@ -135,7 +136,7 @@ public class UserInterface {
 
 
         SideOption selectedSide;
-        System.out.println("Choose a side option or continue:");
+        System.out.println("\nChoose a side option or continue:");
         do {
             this.sideOptionDisplay();
             choice = scanner.nextInt();
@@ -152,7 +153,7 @@ public class UserInterface {
 
         pizza.setToppings(topping);
 
-        System.out.println("Would you like stuffed crust?");
+        System.out.println("\nWould you like stuffed crust?");
         scanner.nextLine();
         String chosenOption = scanner.nextLine();
         if(chosenOption.equalsIgnoreCase("yes")) {
@@ -177,22 +178,42 @@ public class UserInterface {
             pizza.setExtraCheese(false);
         }
 
+        pizza.calculatePizzaPrice();
         pizza.totalPizzaDisplay();
 
+        return pizza;
+
+
     }
-    public void drinkDisplay() {
+
+    public Drink drinkDisplay() {
         Drink drink = new Drink();
         System.out.println("Select your drink size:");
         DrinkOptions selectedOption;
-        this.DrinkMenu();
+        this.drinkMenu();
+        scanner.nextLine();
         String choice = scanner.nextLine();
         selectedOption = (DrinkOptions)DrinkOptions.fromOptionNumber(choice).orElse((DrinkOptions)null);
         this.handleMenuChoice(selectedOption, drink);
+        drink.calculatePrice();
+        return drink;
     }
 
-    public void garlicKnotDisplay() {
-        GarlicKnots garlicknot = new GarlicKnots();
+    public GarlicKnots garlicKnotDisplay() {
+        GarlicKnots garlicKnot = new GarlicKnots();
 
+        return garlicKnot;
+
+    }
+    public void checkoutDisplay(Order order) {
+        menuHeader("            TOTAL ORDER");
+        order.calculatePrice();
+        order.displayTotalOrder();
+        CheckoutOptions selectedOption;
+        this.checkoutMenu();
+        int choice = scanner.nextInt();
+        selectedOption = (CheckoutOptions)CheckoutOptions.fromOptionNumber(choice).orElse((CheckoutOptions)null);
+        this.handleMenuChoice(selectedOption, order);
     }
 
     private void menuHeader(String label) {
@@ -282,17 +303,27 @@ public class UserInterface {
         System.out.println();
     }
 
-    private void DrinkMenu() {
+    private void drinkMenu() {
         for(DrinkOptions option : DrinkOptions.values()) {
-            System.out.printf("%-3d%s%n", option.getOptionSize(), option.getOptionName());
+            System.out.printf("%s %s%n", option.getOptionSize(), option.getOptionName());
+        }
+
+        System.out.println();
+    }
+
+    private void checkoutMenu() {
+        for(CheckoutOptions option : CheckoutOptions.values()) {
+            System.out.printf("%-3d%s%n", option.getOptionNumber(), option.getOptionName());
         }
 
         System.out.println();
     }
 
 
+
     //switch cases to make user input work with menu choices
 
+    //options for home menu
     private void handleMenuChoice(HomeMenuOptions option) {
         if (option == null) {
             System.out.println("Invalid option. Please try again.");
@@ -307,24 +338,30 @@ public class UserInterface {
 
         }
     }
-
-    private void handleMenuChoice(OrderMenuOptions option) {
+    //options for order menu
+    private void handleMenuChoice(OrderMenuOptions option, Order order) {
         if (option == null) {
             System.out.println("Invalid option. Please try again.");
         } else {
 
             switch (option) {
                 case ADD_PIZZA:
-                    this.pizzaDisplay();
+                    Pizza pizza = this.pizzaDisplay();
+                    order.addPizza(pizza);
                     break;
 
                 case ADD_DRINK:
+                    order.addDrink(this.drinkDisplay());
                     break;
 
                 case ADD_GARLIC_KNOTS:
+                    GarlicKnots garlicKnots = this.garlicKnotDisplay();
+                    order.addGarlicKnots(garlicKnots);
                     break;
 
                 case CHECKOUT:
+                    checkoutDisplay(order);
+
                     break;
 
                 case CANCEL_ORDER:
@@ -334,7 +371,7 @@ public class UserInterface {
         }
     }
 
-
+    //options for pizza size
     private void handleMenuChoice(PizzaSize option, Pizza pizza) {
         if (option == null) {
             System.out.println("Invalid option. Please try again.");
@@ -358,6 +395,7 @@ public class UserInterface {
         }
     }
 
+    //options for drink size
     private void handleMenuChoice(DrinkOptions option, Drink drink) {
         if (option == null) {
             System.out.println("Invalid option. Please try again.");
@@ -381,6 +419,7 @@ public class UserInterface {
         }
     }
 
+    //options for crust type
     private void handleMenuChoice(CrustType option, Pizza pizza) {
         if (option == null) {
             System.out.println("Invalid option. Please try again.");
@@ -408,12 +447,20 @@ public class UserInterface {
         }
     }
 
-    private void handleMenuChoice(CheckoutOptions option) {
+    //options for check out
+    private void handleMenuChoice(CheckoutOptions option, Order order)  {
         if (option == null) {
             System.out.println("Invalid option. Please try again.");
         } else {
             switch (option) {
                 case CONFIRM:
+                    System.out.println("Printing receipt...");
+                    try {
+                        ReceiptWriter receiptWriter = new ReceiptWriter(order);
+                        receiptWriter.receipt();
+                    }
+                    catch (Exception e) {
+                    }
                     break;
 
                 case CANCEL:

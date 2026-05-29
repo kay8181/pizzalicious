@@ -7,10 +7,10 @@ import models.Pizza;
 import java.util.ArrayList;
 
 public class Order {
-    ArrayList<Pizza> pizza;
-    ArrayList<Drink> drink;
-    ArrayList<GarlicKnots> garlicKnot;
-    double price;
+    private ArrayList<Pizza> pizza = new ArrayList<>();
+    private ArrayList<Drink> drink = new ArrayList<>();
+    private ArrayList<GarlicKnots> garlicKnot = new ArrayList<>();
+    private double price;
 
     public Order(ArrayList<Pizza> pizza, ArrayList<Drink> drink, ArrayList<GarlicKnots> garlicKnot, double price) {
         this.pizza = pizza;
@@ -38,38 +38,71 @@ public class Order {
     //calculating total price of pizza(s), drink(s) and garlic knots
 
     public void calculatePrice () {
-       double runningTotal = 0;
-        for(Pizza item : pizza) {
-            runningTotal += item.getPrice();
-        }
-        for(Drink item : drink) {
-            runningTotal += item.getPrice();
-        }
-        for(GarlicKnots item : garlicKnot) {
-            runningTotal += item.getPrice();
-        }
+        double runningTotal = 0;
+            for (Pizza item : pizza) {
+                runningTotal += item.getPrice();
+            }
+            for (Drink item : drink) {
+                runningTotal += item.getPrice();
+            }
+            for (GarlicKnots item : garlicKnot) {
+                runningTotal += item.getPrice();
+            }
 
-        this.price = runningTotal;
+            this.price = runningTotal;
     }
 
     // displaying entire order
 
     public void displayTotalOrder() {
-        for(Pizza item : pizza) {
+
+        for (Pizza item : pizza) {
             item.totalPizzaDisplay();
             System.out.println(item.getPrice());
         }
 
-        for( Drink item : drink) {
+        if (!drink.isEmpty()) {
+            System.out.println("            DRINKS:");
+        }
+        for (Drink item : drink) {
             System.out.println(item.getSize() + " Drink");
-            System.out.println( item.getPrice());
+            System.out.println(item.getPrice());
         }
 
-        for(GarlicKnots item : garlicKnot) {
+        if (!garlicKnot.isEmpty()) {
+            System.out.println("            OTHERS:");
+        }
+        for (GarlicKnots item : garlicKnot) {
             System.out.println("Garlic Knot");
             System.out.println(item.getPrice());
         }
 
+        System.out.println("Total: " + this.price);
+
+    }
+
+    public String stringTotalOrder() {
+        StringBuilder stringy = new StringBuilder();
+
+        for (Pizza item : pizza) {
+            stringy.append(item.totalPizzaString()+"\n");
+            stringy.append(item.getPrice()+"\n");
+        }
+
+        for (Drink item : drink) {
+            stringy.append(item.getSize() + " Drink\n");
+            stringy.append(item.getPrice()+"\n");
+        }
+
+        for (GarlicKnots item : garlicKnot) {
+            stringy.append("Garlic Knot\n");
+            stringy.append(item.getPrice()+"\n");
+        }
+
+//        stringy.append("Total: " + this.price);
+        stringy.append(String.format("Total: $%.2f", this.price));
+
+        return stringy.toString();
     }
 
 }
