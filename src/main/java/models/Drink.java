@@ -4,6 +4,9 @@ public class Drink {
     String size;
     double price;
 
+    public Drink() {
+    }
+
     public String getSize() {
         return size;
     }

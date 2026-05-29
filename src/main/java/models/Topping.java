@@ -81,31 +81,21 @@ public class Topping {
     }
 
     public void addMeat(MeatOption option) {
+
         if (option == null) {
             System.out.println("Invalid option. Please try again.");
         } else {
-            switch (option) {
-                case PEPPERONI:
-                    this.meat.add("Pepperoni");
-                    break;
-                case SAUSAGE:
-                    this.meat.add("Sausage");
-                    break;
-                case HAM:
-                    this.meat.add("Ham");
-                    break;
-                case BACON:
-                    this.meat.add("Bacon");
-                    break;
-                case CHICKEN:
-                    this.meat.add("Chicken");
-                    break;
-                case MEATBALL:
-                    this.meat.add("Meatball");
-                    break;
-                case CONTINUE:
+            if(duplicateCheck(meat, option.getOptionName())) {
+                System.out.println("Option already added.");
             }
-
+            else {
+                switch (option) {
+                    case PEPPERONI, SAUSAGE, HAM, CHICKEN, MEATBALL, BACON:
+                        this.meat.add(option.getOptionName());
+                        break;
+                    case CONTINUE:
+                }
+            }
         }
     }
 
@@ -114,20 +104,8 @@ public class Topping {
             System.out.println("Invalid option. Please try again.");
         } else {
             switch (option) {
-                case MOZZARELLA:
-                    this.cheese.add("Mozzarella");
-                    break;
-                case PARMESAN:
-                    this.cheese.add("Parmesan");
-                    break;
-                case RICOTTA:
-                    this.cheese.add("Ricotta");
-                    break;
-                case GOAT_CHEESE:
-                    this.cheese.add("Goat Cheese");
-                    break;
-                case BUFFALO:
-                    this.cheese.add("Buffalo");
+                case MOZZARELLA, PARMESAN, RICOTTA, GOAT_CHEESE, BUFFALO:
+                    this.cheese.add(option.getOptionName());
                     break;
                 case CONTINUE:
             }
@@ -140,32 +118,8 @@ public class Topping {
             System.out.println("Invalid option. Please try again.");
         } else {
             switch (option) {
-                case ONIONS:
-                    this.regularToppings.add("Onions");
-                    break;
-                case MUSHROOMS:
-                    this.regularToppings.add("Mushrooms");
-                    break;
-                case BELL_PEPPERS:
-                    this.regularToppings.add("Bell Peppers");
-                    break;
-                case OLIVES:
-                    this.regularToppings.add("Olives");
-                    break;
-                case TOMATOES:
-                    this.regularToppings.add("Tomatoes");
-                    break;
-                case SPINACH:
-                    this.regularToppings.add("Spinach");
-                    break;
-                case BASIL:
-                    this.regularToppings.add("Basil");
-                    break;
-                case PINEAPPLE:
-                    this.regularToppings.add("Pineapple");
-                    break;
-                case ANCHOVIES:
-                    this.regularToppings.add("Anchovies");
+                case ONIONS,MUSHROOMS, BELL_PEPPERS, OLIVES,TOMATOES, SPINACH, BASIL,PINEAPPLE, ANCHOVIES:
+                    this.regularToppings.add(option.getOptionName());
                     break;
                 case CONTINUE:
             }
@@ -178,23 +132,8 @@ public class Topping {
             System.out.println("Invalid option. Please try again.");
         } else {
             switch (option) {
-                case MARINARA:
-                    this.sauce.add("Marinara");
-                    break;
-                case ALFREDO:
-                    this.sauce.add("Alfredo");
-                    break;
-                case PESTO:
-                    this.sauce.add("Pesto");
-                    break;
-                case BBQ:
-                    this.sauce.add("BBQ");
-                    break;
-                case BUFFALO:
-                    this.sauce.add("Buffalo");
-                    break;
-                case OLIVE_OIL:
-                    this.sauce.add("Olive Oil");
+                case MARINARA,ALFREDO, PESTO, BBQ, BUFFALO, OLIVE_OIL:
+                    this.sauce.add(option.getOptionName());
                     break;
                 case CONTINUE:
             }
@@ -207,11 +146,8 @@ public class Topping {
             System.out.println("Invalid option. Please try again.");
         } else {
             switch (option) {
-                case RED_PEPPER:
-                    this.side.add("Red Pepper");
-                    break;
-                case PARMESAN:
-                    this.side.add("Parmesan");
+                case RED_PEPPER, PARMESAN:
+                    this.side.add(option.getOptionName());
                     break;
                 case CONTINUE:
             }
@@ -248,6 +184,13 @@ public class Topping {
         }
     }
 
+    public boolean duplicateCheck(ArrayList<String> list, String searchTerm) {
+
+        long count = list.stream()
+                .filter(item -> item.toLowerCase().contains(searchTerm.toLowerCase()))
+                .count();
+        return count > 0;
+    }
 
 
 

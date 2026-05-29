@@ -77,6 +77,7 @@ public class Pizza {
     }
 
     public void totalPizzaDisplay() {
+        System.out.println("            FINISHED PIZZA:   ");
         System.out.println(this.crustType + "\n" + this.pizzaSize);
         this.toppings.totalMeat();
         this.toppings.totalCheese();

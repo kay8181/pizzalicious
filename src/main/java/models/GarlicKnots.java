@@ -7,4 +7,8 @@ public class GarlicKnots {
         this.price = 1.50;
 
     }
+    public double getPrice() {
+        return price;
+    }
+
 }

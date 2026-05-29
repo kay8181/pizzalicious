@@ -1,6 +1,8 @@
 package ui;
 
+import data.Order;
 import models.Drink;
+import models.GarlicKnots;
 import models.Pizza;
 import models.Topping;
 
@@ -11,6 +13,11 @@ public class UserInterface {
     public static final String GREEN = "\u001B[32m";
     public static final String RED = "\u001B[31m";
     Scanner scanner = new Scanner(System.in);
+
+    public void start(){
+       Order order = new Order();
+        homeDisplay();
+    }
 
     public UserInterface() {
     }
@@ -59,7 +66,9 @@ public class UserInterface {
         selectedSize = (PizzaSize)PizzaSize.fromOptionNumber(choice).orElse((PizzaSize)null);
         this.handleMenuChoice(selectedSize, pizza);
 
-        System.out.println("Select your Toppings: ");
+        System.out.println("            TOPPINGS   ");
+        System.out.println(GREEN + "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯" + RESET);
+        System.out.println(RED + "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯" + RESET);
         Topping topping = new Topping();
 
         MeatOption selectedMeat;
@@ -73,7 +82,9 @@ public class UserInterface {
 
             topping.totalMeat();
 
-            System.out.println("\nChoose another meat option or continue:");
+            if (selectedMeat != MeatOption.CONTINUE) {
+                System.out.println("\nChoose another meat option or continue:");
+            }
         } while(selectedMeat != MeatOption.CONTINUE);
 
         CheeseOption selectedCheese;
@@ -87,7 +98,9 @@ public class UserInterface {
 
             topping.totalCheese();
 
-            System.out.println("\nChoose another cheese option or continue:");
+            if (selectedCheese != CheeseOption.CONTINUE) {
+                System.out.println("\nChoose another cheese option or continue:");
+            }
         } while(selectedCheese != CheeseOption.CONTINUE);
 
         RegularTopping selectedTopping;
@@ -98,10 +111,10 @@ public class UserInterface {
             selectedTopping = (RegularTopping)RegularTopping.fromOptionNumber(choice).orElse((RegularTopping)null);
             topping.addRegularTopping(selectedTopping);
             System.out.println("Topping(s) chosen:");
-
-           topping.totalRegularTopping();
-
-            System.out.println("\nChoose another regular topping option or continue:");
+            topping.totalRegularTopping();
+            if (selectedTopping != RegularTopping.CONTINUE) {
+                System.out.println("\nChoose another regular topping option or continue:");
+            }
         } while(selectedTopping != RegularTopping.CONTINUE);
 
         SauceOption selectedSauce;
@@ -113,10 +126,11 @@ public class UserInterface {
             topping.addSauce(selectedSauce);
             System.out.println("Topping(s) chosen:");
 
-            for (String sauce : topping.getSauce()) {
-                System.out.println(sauce);
+            topping.totalSauce();
+
+            if (selectedSauce != SauceOption.CONTINUE) {
+                System.out.println("\nChoose another sauce option or continue:");
             }
-            System.out.println("\nChoose another sauce option or continue:");
         } while(selectedSauce != SauceOption.CONTINUE);
 
 
@@ -131,12 +145,15 @@ public class UserInterface {
 
             topping.totalSide();
 
-            System.out.println("\nChoose another side option or continue:");
+            if (selectedSide != SideOption.CONTINUE) {
+                System.out.println("\nChoose another side option or continue:");
+            }
         } while(selectedSide != SideOption.CONTINUE);
 
         pizza.setToppings(topping);
 
         System.out.println("Would you like stuffed crust?");
+        scanner.nextLine();
         String chosenOption = scanner.nextLine();
         if(chosenOption.equalsIgnoreCase("yes")) {
             pizza.setStuffedCrust(true);
@@ -161,6 +178,20 @@ public class UserInterface {
         }
 
         pizza.totalPizzaDisplay();
+
+    }
+    public void drinkDisplay() {
+        Drink drink = new Drink();
+        System.out.println("Select your drink size:");
+        DrinkOptions selectedOption;
+        this.DrinkMenu();
+        String choice = scanner.nextLine();
+        selectedOption = (DrinkOptions)DrinkOptions.fromOptionNumber(choice).orElse((DrinkOptions)null);
+        this.handleMenuChoice(selectedOption, drink);
+    }
+
+    public void garlicKnotDisplay() {
+        GarlicKnots garlicknot = new GarlicKnots();
 
     }
 
@@ -246,6 +277,14 @@ public class UserInterface {
     private void sideOptionDisplay() {
         for(SideOption option : SideOption.values()) {
             System.out.printf("%-3d%s%n", option.getOptionNumber(), option.getOptionName());
+        }
+
+        System.out.println();
+    }
+
+    private void DrinkMenu() {
+        for(DrinkOptions option : DrinkOptions.values()) {
+            System.out.printf("%-3d%s%n", option.getOptionSize(), option.getOptionName());
         }
 
         System.out.println();
